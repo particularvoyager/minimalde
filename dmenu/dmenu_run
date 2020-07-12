@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# dmenu_run_i(mproved) by @particularvoyager
+# uses external dpass.sh script to provide sudo support in dmenu
+# TODO: better condition support and make script portable
+
+termcmd="st -e"
+
+cmd="$(dmenu_path | dmenu $@ -p "run")"
+case $cmd in
+    *\!t ) ${termcmd} "$(printf "%s" "${cmd}" | cut -d'!' -f1)" ;;
+    *\!ts ) SUDO_ASKPASS=~/scripts/dpass.sh sudo -A ${termcmd} "$(printf "%s" "${cmd}" | cut -d'!' -f1)" ;;
+    *\!s ) SUDO_ASKPASS=~/scripts/dpass.sh sudo -A "$(printf "%s" "${cmd}" | cut -d'!' -f1)" ;;
+    * ) ${cmd} ;;
+esac
+exit
+

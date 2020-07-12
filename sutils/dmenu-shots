@@ -1,0 +1,40 @@
+#!/bin/bash
+# needed scrot and ffmpeg
+
+IMG_PATH=~/media/shots/img
+CAST_PATH=~/media/shots/cast
+FILEMASK=%Y-%m-%d-%H-%M-%S.png
+FILEMASKCAST=$(date +%F-%H-%M).mkv
+EDIT=shotwell
+RES=$(xdpyinfo  | grep -oP 'dimensions:\s+\K\S+') 
+
+if [ ! -d "$IMG_PATH" ]; then
+  mkdir $IMG_PATH
+fi
+
+if [ ! -d "$CAST_PATH" ]; then
+  mkdir $CAST_PATH
+fi
+
+prog="quick_fullscreen
+quick_section
+clipboard_fullscreen
+clipboard_selection
+edit_fullscreen
+edit_section
+cast
+kill_cast"
+
+cmd=$(dmenu -l 20 -p "shots"   <<< "$prog")
+
+case ${cmd%% *} in
+    quick_fullscreen)             scrot -d 1 "$IMG_PATH/$FILEMASK" ;; 
+    quick_section)                scrot -s "$IMG_PATH/$FILEMASK" ;;
+    clipboard_fullscreen)         scrot '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -target image/png -i $f' ;;
+    clipboard_selection)          scrot -s '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -target image/png -i $f' ;;
+    edit_fullscreen)              scrot -d 1 "$IMG_PATH/$FILEMASK" -e "$EDIT \$f"  ;;
+    edit_section)                 scrot -s "$IMG_PATH/$FILEMASK" -e "$EDIT \$f"  ;;
+    cast)                         ffmpeg -re -f x11grab -s $RES -i :0.0+0,0 -f pulse -ac 2 -i default -vcodec libx264 "$CAST_PATH/$FILEMASKCAST" ;;
+    kill_cast)                    pkill ffmpeg ;;
+	*)		exec "'${cmd}'"  ;;
+esac

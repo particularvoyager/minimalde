@@ -1,0 +1,13 @@
+#!/bin/bash
+
+RET=$(echo -e "restart_dwm\nshutdown\nsuspend\nreboot\nlogout\nlock" | dmenu -l 6 -p "power")
+
+case $RET in
+	restart_dwm) pkill dwm ;;
+	shutdown) systemctl poweroff ;;
+	suspend) systemctl suspend ;;
+	reboot) systemctl reboot ;;
+	lock) slock  ;;
+	logout) pkill Xorg ;;
+	*) ;;
+esac

@@ -1,0 +1,13 @@
+#!/bin/bash
+config=~/.config/minimalrc/wallsetrc
+
+touch $config
+
+if [ -n "$1" ]
+then
+    feh --bg-scale $1
+    readlink -f $1 > $config 
+else
+    echo "Selecting default: $(cat $config)"
+    feh --bg-scale $(cat $config)
+fi
