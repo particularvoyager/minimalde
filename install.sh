@@ -15,15 +15,19 @@ case "$response" in
         ;;
 esac
 
-echo "Setup sutils tolls in /usr/local/bin"
+echo "Setup sutils tools in /usr/local/bin"
 cd sutils/
 sudo ln dmenu-power /usr/local/bin
 sudo ln dmenu-kill /usr/local/bin
 sudo ln dmenu-shots /usr/local/bin
+sudo ln dmenu-runner /usr/local/bin
 sudo ln wallset /usr/local/bin
+sudo ln dwm-bar /usr/local/bin
+sudo ln brownoutd /usr/local/bin
 
 echo "Setup suckless tools"
 cd ../dmenu/ && make && sudo make install
 cd ../dwm/ && make && sudo make install
 cd ../st/ && make && sudo make install
 cd ../slock/ && make && sudo make install
+cd ../brownout/ && make && sudo make install

@@ -17,3 +17,7 @@ Minimal DE собран мной и включает в себя многие н
 - dmenu
 - немного скриптов для замещения функционала гуишный приложений
 
+TODO
+[ ] - Slock: block F1-F13 keys
+[ ] - Dwm: setup normal dwmbar
+[ ] - etc

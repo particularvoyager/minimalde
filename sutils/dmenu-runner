@@ -1,0 +1,25 @@
+#!/bin/bash
+
+selected=$(find ~ | dmenu -l 20)
+function options {
+    opt=$(echo -e "xdg-open\nopen in terminal\nopen in vifm\nopen in thunar\ncustom command\ncopy to clipboard\ndelete to trash" | dmenu -l 10)
+    case $opt in
+        'xdg-open') xdg-open $selected ;;
+        'open in terminal') st -d $(dirname $selected);;
+        'open in terminal') st -d $(dirname $selected);;
+        'open in vifm') st -e vifm $(dirname $selected);;
+        'open in thunar') thunar $(dirname $selected);;
+        'custom command') $(dmenu_path | dmenu -l 10 $@ -p "custom command") $selected ;;
+        'copy to clipboard') xclip $selected ;;
+        'delete to trash') rm -rf $selected ;;
+        *) ;;
+    esac
+        
+}
+
+if [ -n "$selected" ]
+then
+options
+else
+echo "No file selected"
+fi
