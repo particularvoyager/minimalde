@@ -7,7 +7,22 @@ case "$response" in
     [yY][eE][sS]|[yY])
         rm -rf ~/.xinitrc
         echo "Setup new xinitrc file"
-        mv etc/xinitrc ~/.xinitrc
+        cp etc/xinitrc ~/.xinitrc
+        echo "Done"
+        ;;
+    *)
+        echo "Okay"
+        ;;
+esac
+
+read -r -p "Setup custom folder path? [y/N] " response
+case "$response" in
+    [yY][eE][sS]|[yY])
+        rm -rf ~/.config/user-dirs.dirs
+        mkdir ~/all ~/downloads ~/media ~/media/shots ~/media/shots/cast ~/media/shots/img ~/media/docs ~/media/music ~/media/patterns ~/media/pix ~/media/vid 
+        echo "Setup new user-dirs file"
+        cp etc/user-dirs.dirs ~/.config/user-dirs.dirs
+        xdg-user-dirs-update
         echo "Done"
         ;;
     *)

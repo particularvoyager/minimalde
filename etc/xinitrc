@@ -1,0 +1,6 @@
+wallset &
+dwm-bar &
+brownoutd &
+while :; do
+	ssh-agent dwm
+done
